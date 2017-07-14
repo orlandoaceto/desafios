@@ -1,0 +1,105 @@
+
+
+<!DOCTYPE html>
+    <html>
+    <body>
+    <p>Comapatibility check</p>
+    <button id="button" onclick= "isCompatible()">Click to check</button>
+    <p id="demo"></p>
+    <script>
+
+	function detect() { 
+		var info = { "OS": navigator.platform, "browser": "", "browserVersion": ""}
+		var ua = navigator.userAgent;
+		if(ua.indexOf("Opera") != -1){
+			info.browser = "Opera";
+			var version = "";
+			for(i = ua.indexOf("Opera") + 6; i < ua.length && ua[i] != ' '; i++){
+				version += ua[i];
+			}
+			info.browserVersion = version;
+		}
+		else if(ua.indexOf('OPR') != -1){
+			info.browser = "Opera";
+			var version = "";
+			for(i = ua.indexOf("OPR") + 4; i < ua.length && ua[i] != ' '; i++){
+				version += ua[i];
+			}
+			info.browserVersion = version;
+		}
+		else if(ua.indexOf("Chrome") != -1) {
+			info.browser = "Chrome";
+			var version = "";
+			for(i = ua.indexOf("Chrome") + 7; i < ua.length && ua[i] != ' '; i++){
+				version += ua[i];
+			}
+			info.browserVersion = version;
+		}
+		else if(ua.indexOf("Safari") != -1) {
+			info.browser = "Safari";
+			var version = "";
+			for(i = ua.indexOf("Safari") + 7; i < ua.length && ua[i] != ' '; i++){
+				version += ua[i];
+			}
+			info.browserVersion = version;
+		}
+		else if(ua.indexOf("Firefox") != -1 ) {
+			info.browser = "Firefox";
+			var version = "";
+			for(i = ua.indexOf("Firefox") + 8; i < ua.length && ua[i] != ' '; i++){
+				version += ua[i];
+			}
+			info.browserVersion = version;
+		}
+		else if(ua.indexOf("MSIE") != -1 ) {
+			info.browser = "IE";
+			var version = "";
+			for(i = ua.indexOf("MSIE") + 8; i < ua.length && ua[i] != ' '; i++){
+				version += ua[i];
+			}
+			info.browserVersion = version;
+		} 
+		else if(ua.indexOf("Trident") != -1){
+			info.browser = "IE";
+			var version = "";
+			for(i = ua.indexOf("Trident") + 8; i < ua.length && ua[i] != '.'; i++){
+				version += ua[i];
+			}
+			var numberVer = number(version) + 4;
+			version = numberVer.toString();
+		}
+		else {
+			info.browser = "Unknown";
+			info.browserVersion = "NA";
+		}
+		
+		return info;
+	}
+	
+	function isCompatible(){
+		document.getElementById("button").onclick = null;
+		var info = detect();
+		var isCompatible = false;
+		var versionNum = "";
+		
+		for(i = 0; i < info.browserVersion.length && info.browserVersion[i] != '.'; i++){
+			versionNum += info.browserVersion[i];
+		}
+		if(info.browser == "IE"){
+			if(Number(versionNum) >= 11) isCompatible = true;
+		}
+		else if(info.browser == "Chrome"){
+			if(Number(versionNum) >= 52) isCompatible = true;
+		}
+		else if(info.browser == "Firefox"){
+			if(Number(versionNum) >= 47) isCompatible = true;
+		}
+		document.write("OS: " + info.OS + "<br>Browser: " + info.browser + "<br>Browser Version: " + info.browserVersion + "<br>");
+		if(isCompatible) document.write("Your browser is compatible");
+		else document.write("Your browser is not compatible");
+	}
+	
+    </script>
+
+    </body>
+    </html>
